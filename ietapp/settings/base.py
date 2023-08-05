@@ -23,7 +23,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "ietapp.apps.api",
+    # API app for REST API
+    "api",
+
+    # our all apps
+    "api.basic",
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -75,12 +79,12 @@ TEMPLATES = [
 # DATABASES SETTINGS
 # ==============================================================================
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL", default="postgres://ietapp:ietapp@localhost:5432/ietapp"),
-        conn_max_age=600,
-    )
-}
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=config("DATABASE_URL", default="postgres://ietapp:ietapp@localhost:5432/ietapp"),
+#         conn_max_age=600,
+#     )
+# }
 
 
 # ==============================================================================

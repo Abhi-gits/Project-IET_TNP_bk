@@ -1,4 +1,5 @@
-Django==4.1.1
 Django==4.2.4
 python-decouple==3.8   #for setting related security, protect sensitive data
 pytz==2023.3   # for timezone aware datetime fields
+dj-database-url==2.0.0   #for database url
+psycopg2-binary==2.9.6   #for postgresql database
