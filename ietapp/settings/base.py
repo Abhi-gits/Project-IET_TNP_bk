@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # CORE SETTINGS
 # ==============================================================================
 
-SECRET_KEY = config("SECRET_KEY", default="django-insecure$simple.settings.local")
+SECRET_KEY = config("SECRET_KEY", default="django-insecure$ietapp.settings.local")
 
 DEBUG = config("DEBUG", default=True, cast=bool)
 
@@ -23,15 +23,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "ietapp.apps.api",
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ROOT_URLCONF = "simple.urls"
+ROOT_URLCONF = "ietapp.urls"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-WSGI_APPLICATION = "simple.wsgi.application"
+WSGI_APPLICATION = "ietapp.wsgi.application"
 
 
 # ==============================================================================
@@ -76,7 +77,7 @@ TEMPLATES = [
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=config("DATABASE_URL", default="postgres://simple:simple@localhost:5432/simple"),
+        default=config("DATABASE_URL", default="postgres://ietapp:ietapp@localhost:5432/ietapp"),
         conn_max_age=600,
     )
 }
