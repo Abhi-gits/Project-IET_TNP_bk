@@ -67,6 +67,12 @@ REST_FRAMEWORK = {
 
 PASSWORD_RESET_TIMEOUT=1200          # 1200 Sec = 20 Min
 
+
+# ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', '.now.sh', 'portfolio-api-pu4m.onrender.com']
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
+
+INTERNAL_IPS = ["127.0.0.1"]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
