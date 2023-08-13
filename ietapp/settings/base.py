@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     # our all apps
     "api.basic",
     "api.account",
-    "api.placement",
+    "api.tnp",
 
     # Third party apps
     'corsheaders',

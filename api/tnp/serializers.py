@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from api.account.models import User
-from api.placement.models import Placement
+from api.tnp.models import Placement, Courses
 
 
 
@@ -54,4 +54,48 @@ class PlacementUpdateSerializer(serializers.ModelSerializer):
         return instance
     
 
+class CoursesCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Courses
+        fields = ['id', 'user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status', 'created_at', 'updated_at', 'is_approved']
+        extra_kwargs = {
+            'user': {'read_only': True}
+        }
+
+    def create(self, validate_data):
+        return Courses.objects.create(**validate_data)
+    
+class CoursesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Courses
+        fields = ['id', 'user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status', 'created_at', 'updated_at', 'is_approved']
+        extra_kwargs = {
+            'user': {'read_only': True}
+        }
+
+class CoursesDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Courses
+        fields = ['id', 'user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status', 'created_at', 'updated_at', 'is_approved']
+        extra_kwargs = {
+            'user': {'read_only': True}
+        }
+
+class CoursesUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Courses
+        fields = ['id', 'user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status', 'created_at', 'updated_at', 'is_approved']
+        extra_kwargs = {
+            'user': {'read_only': True}
+        }
+
+    def update(self, instance, validate_data):
+        instance.course_name = validate_data.get('course_name', instance.course_name)
+        instance.course_description = validate_data.get('course_description', instance.course_description)
+        instance.course_duration = validate_data.get('course_duration', instance.course_duration)
+        instance.course_fee = validate_data.get('course_fee', instance.course_fee)
+        instance.course_status = validate_data.get('course_status', instance.course_status)
+        instance.is_approved = validate_data.get('is_approved', instance.is_approved)
+        instance.save()
+        return instance
     
