@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 from api.account.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_exempt
 
 # Generate Token Manually
 
@@ -29,9 +30,11 @@ class UserRegistrationView(APIView):
         return Response({'token': token, 'msg': 'Registration Successful'}, status=status.HTTP_201_CREATED)
 
 
+
 class UserLoginView(APIView):
     renderer_classes = [UserRenderer]
 
+    @csrf_exempt
     def post(self, request, format=None):
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

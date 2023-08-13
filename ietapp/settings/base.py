@@ -153,19 +153,9 @@ TEMPLATES = [
 # DATABASES SETTINGS
 # ==============================================================================
 
-DB_NAME = os.environ.get('DB_NAME')
-DB_HOST = os.environ.get('DB_HOST')
-DB_USER = os.environ.get('DB_USER')
-DB_PWD = os.environ.get('DB_PWD')
-
-mongoengine.connect(db=DB_NAME, host=DB_HOST, username=DB_USER, password=DB_PWD)
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=config("DATABASE_URL", default="postgres://ietapp:ietapp@localhost:5432/ietapp"),
-#         conn_max_age=600,
-#     )
-# }
-
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+}
 
 
 # ==============================================================================
