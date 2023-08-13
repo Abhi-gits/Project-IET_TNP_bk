@@ -17,3 +17,7 @@ exclude = '''
     | migrations
   )/
 '''
+
+'''
+[tool.poetry.dependencies]
+python = "^3.10"
