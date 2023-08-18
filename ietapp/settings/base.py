@@ -76,6 +76,7 @@ INTERNAL_IPS = ["127.0.0.1"]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://project-iet-tnp-fr.vercel.app",
 ]
 
 
@@ -155,8 +156,12 @@ TEMPLATES = [
 # ==============================================================================
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+    # 'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+
+    'default': dj_database_url.parse("postgres://placement_user:UJVM2nwSRTyHn6fNCM8BtxlJdh2nf741@dpg-cjbloc3bq8nc73dndb00-a.singapore-postgres.render.com/placement", conn_max_age=600),
 }
+
+#postgres://placement_user:UJVM2nwSRTyHn6fNCM8BtxlJdh2nf741@dpg-cjbloc3bq8nc73dndb00-a.singapore-postgres.render.com/placement
 
 
 # ==============================================================================
