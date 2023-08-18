@@ -6,6 +6,7 @@ from datetime import timedelta
 import mongoengine
 import os
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -156,9 +157,9 @@ TEMPLATES = [
 # ==============================================================================
 
 DATABASES = {
-    # 'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 
-    'default': dj_database_url.parse("postgres://placement_user:UJVM2nwSRTyHn6fNCM8BtxlJdh2nf741@dpg-cjbloc3bq8nc73dndb00-a.singapore-postgres.render.com/placement", conn_max_age=600),
+    #'default': dj_database_url.parse("DATABASE_URL", conn_max_age=600),
 }
 
 #postgres://placement_user:UJVM2nwSRTyHn6fNCM8BtxlJdh2nf741@dpg-cjbloc3bq8nc73dndb00-a.singapore-postgres.render.com/placement
