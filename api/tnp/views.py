@@ -16,7 +16,7 @@ from api.account.permissions import IsOwnerOrReadOnly
 class PlacementViewSet(viewsets.ModelViewSet):
     queryset = Placement.objects.all()
     serializer_class = PlacementCreateSerializer
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['user', 'company_name', 'company_email', 'company_website', 'company_address', 'company_phone',
