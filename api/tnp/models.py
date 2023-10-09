@@ -6,15 +6,11 @@ from api.account.models import User
 # Create your models here.
 class Placement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, required=True)
     company_name = models.CharField(max_length=255, required=True)
-    company_email = models.EmailField(required=False)
-    company_website = models.URLField(required=False)
-    company_address = models.CharField(max_length=255, required=False)
-    company_phone = models.CharField(max_length=255, required=False)
+    company_email = models.EmailField(null=True, blank=True)
+    company_website = models.URLField(null=True, blank=True)
     company_salary = models.CharField(max_length=255, required=True)
-    company_location = models.CharField(max_length=255, required=False)
-    company_category = models.CharField(max_length=255, required=False)
-    company_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False)
@@ -30,11 +26,11 @@ class Placement(models.Model):
 
 class Courses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
     course_name = models.CharField(max_length=255)
     course_description = models.TextField()
     course_duration = models.CharField(max_length=255)
     course_fee = models.CharField(max_length=255)
-    course_status = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False)
