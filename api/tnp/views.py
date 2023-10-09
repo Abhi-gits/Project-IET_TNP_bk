@@ -19,12 +19,9 @@ class PlacementViewSet(viewsets.ModelViewSet):
     # authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['user', 'company_name', 'company_email', 'company_website', 'company_address', 'company_phone',
-                        'company_salary', 'company_location', 'company_category', 'company_status', 'created_at', 'updated_at', 'is_approved']
-    search_fields = ['user', 'company_name', 'company_email', 'company_website', 'company_address', 'company_phone',
-                     'company_salary', 'company_location', 'company_category', 'company_status', 'created_at', 'updated_at', 'is_approved']
-    ordering_fields = ['user', 'company_name', 'company_email', 'company_website', 'company_address', 'company_phone',
-                       'company_salary', 'company_location', 'company_category', 'company_status', 'created_at', 'updated_at', 'is_approved']
+    filterset_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary',  'created_at', 'updated_at', 'is_approved']
+    search_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary', 'created_at', 'updated_at', 'is_approved']
+    ordering_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary', 'created_at', 'updated_at', 'is_approved']
 
     def get_serializer_class(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -111,12 +108,9 @@ class CoursesViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status',
-                        'created_at', 'updated_at', 'is_approved']
-    search_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status',
-                     'created_at', 'updated_at', 'is_approved']
-    ordering_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'course_status',
-                       'created_at', 'updated_at', 'is_approved']
+    filterset_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
+    search_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
+    ordering_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
 
     def get_serializer_class(self):
         if self.action == 'list' or self.action == 'retrieve':
