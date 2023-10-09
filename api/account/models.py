@@ -36,6 +36,13 @@ class UserManager(BaseUserManager):
 
 #  Custom User Model
 class User(AbstractBaseUser):
+    USER_TYPE_CHOICES = (
+        (1, 'Admin'),
+        (2, 'Student'),
+        (3, 'Teacher'),
+        (4, 'Staff'),
+    )
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
     email = models.EmailField(
         verbose_name='Email',
         max_length=255,
@@ -69,5 +76,4 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
         return self.is_admin
