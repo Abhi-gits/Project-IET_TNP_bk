@@ -6,11 +6,11 @@ from api.account.models import User
 # Create your models here.
 class Placement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255, required=True)
-    company_name = models.CharField(max_length=255, required=True)
+    name = models.CharField(max_length=255)
+    company_name = models.CharField(max_length=255)
     company_email = models.EmailField(null=True, blank=True)
     company_website = models.URLField(null=True, blank=True)
-    company_salary = models.CharField(max_length=255, required=True)
+    company_salary = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False)
