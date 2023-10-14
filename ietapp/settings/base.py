@@ -74,12 +74,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv(
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://project-iet-tnp-fr.vercel.app",
-    "https://ietagra.vercel.app",
-]
+CORS_ALLOWED_ORIGINS = ['*']
 
 
 # JWT Settings
