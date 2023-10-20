@@ -105,7 +105,7 @@ class PlacementListAllAPIView(APIView):
 class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Courses.objects.all()
     serializer_class = CoursesCreateSerializer
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
