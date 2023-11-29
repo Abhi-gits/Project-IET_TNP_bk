@@ -3,7 +3,7 @@ from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 
 #  Custom User Manager
 class UserManager(BaseUserManager):
-    def create_user(self, user_type, email, name, phone, password=None, password2=None):
+    def create_user(self, email, name, phone, password=None, password2=None):
         """
         Creates and saves a User with the given email, name, tc and password.
         """
@@ -11,7 +11,6 @@ class UserManager(BaseUserManager):
             raise ValueError('User must have an email address')
 
         user = self.model(
-            user_type=user_type,
             email=self.normalize_email(email),
             name=name,
             phone=phone,
