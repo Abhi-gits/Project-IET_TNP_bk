@@ -8,7 +8,8 @@ from .serializers import PlacementSerializer, CoursesSerializer, BatchSerializer
 @api_view(['GET'])
 def PlacementAPIOverview(request):
     api_urls = {
-        'List': '/placement-list/',
+        'List All': '/placement-list-all/',
+        'List Approved': '/placement-list-approved/',
         'Detail View': '/placement-detail/<str:pk>/',
         'Create': '/placement-create/',
         'Update': '/placement-update/<str:pk>/',
@@ -25,6 +26,13 @@ def PlacementList(request):
     return Response(placement_serializer.data)
 
 
+@api_view(['GET'])
+def PlacementListApproved(request):
+    placements = Placement.objects.filter(is_approved=True)
+    placement_serializer = PlacementSerializer(placements, many=True)
+    return Response(placement_serializer.data)
+\
+    
 @api_view(['POST'])
 def PlacementCreate(request):
     placement_item = PlacementSerializer(data=request.data)
@@ -81,7 +89,8 @@ def PlacementDelete(request, pk):
 @api_view(['GET'])
 def CoursesAPIOverview(request):
     api_urls = {
-        'List': '/courses-list/',
+        'List All': '/courses-list-all/',
+        'List Approved': '/courses-list-approved/',
         'Detail View': '/courses-detail/<str:pk>/',
         'Create': '/courses-create/',
         'Update': '/courses-update/<str:pk>/',
@@ -94,6 +103,13 @@ def CoursesAPIOverview(request):
 @api_view(['GET'])
 def CoursesList(request):
     courses = Courses.objects.all()
+    courses_serializer = CoursesSerializer(courses, many=True)
+    return Response(courses_serializer.data)
+
+
+@api_view(['GET'])
+def CoursesListApproved(request):
+    courses = Courses.objects.filter(is_approved=True)
     courses_serializer = CoursesSerializer(courses, many=True)
     return Response(courses_serializer.data)
 
@@ -152,7 +168,7 @@ def CoursesDelete(request, pk):
 @api_view(['GET'])
 def BatchAPIOverview(request):
     api_urls = {
-        'List': '/batch-list/',
+        'List All': '/batch-list-all/',
         'Detail View': '/batch-detail/<str:pk>/',
         'Create': '/batch-create/',
         'Update': '/batch-update/<str:pk>/',
