@@ -16,4 +16,7 @@ urlpatterns = [
     path('courses-detail/<str:pk>/', views.CoursesDetail, name='courses-detail'),
     path('courses-update/<str:pk>/', views.CoursesUpdate, name='courses-update'),
     path('courses-delete/<str:pk>/', views.CoursesDelete, name='courses-delete'),    
+    
+    path('batch/', views.BatchAPIOverview, name='batch-api-overview'),
+    path('batch-list/', views.BatchList, name='batch-list'),
 ]

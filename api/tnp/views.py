@@ -19,19 +19,6 @@ def PlacementAPIOverview(request):
 
 
 @api_view(['GET'])
-def CoursesAPIOverview(request):
-    api_urls = {
-        'List': '/courses-list/',
-        'Detail View': '/courses-detail/<str:pk>/',
-        'Create': '/courses-create/',
-        'Update': '/courses-update/<str:pk>/',
-        'Delete': '/courses-delete/<str:pk>/',
-    }
-    
-    return Response(api_urls)
-
-
-@api_view(['GET'])
 def PlacementList(request):
     placements = Placement.objects.all()
     placement_serializer = PlacementSerializer(placements, many=True)
@@ -87,6 +74,21 @@ def PlacementDelete(request, pk):
     
     placement_item.delete()
     return Response({'message': 'Placement deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+@api_view(['GET'])
+def CoursesAPIOverview(request):
+    api_urls = {
+        'List': '/courses-list/',
+        'Detail View': '/courses-detail/<str:pk>/',
+        'Create': '/courses-create/',
+        'Update': '/courses-update/<str:pk>/',
+        'Delete': '/courses-delete/<str:pk>/',
+    }
+    
+    return Response(api_urls)
 
 
 @api_view(['GET'])
@@ -145,3 +147,23 @@ def CoursesDelete(request, pk):
     
     courses_item.delete()
     return Response({'message': 'Courses deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def BatchAPIOverview(request):
+    api_urls = {
+        'List': '/batch-list/',
+        'Detail View': '/batch-detail/<str:pk>/',
+        'Create': '/batch-create/',
+        'Update': '/batch-update/<str:pk>/',
+        'Delete': '/batch-delete/<str:pk>/',
+    }
+    
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def BatchList(request):
+    batch = Batch.objects.all()
+    batch_serializer = BatchSerializer(batch, many=True)
+    return Response(batch_serializer.data)
