@@ -41,13 +41,11 @@ def PlacementList(request):
 @api_view(['POST'])
 def PlacementCreate(request):
     placement_item = PlacementSerializer(data=request.data)
-    
-    if item.objects.filter(**request.data).exists():
-        return Response({'message': 'Placement already exists'}, status=status.HTTP_400_BAD_REQUEST)
-    
+
     if placement_item.is_valid():
         placement_item.save()
-        return Response(placement_item.data, status=status.HTTP_201_CREATED)
+        msg = {'message': 'Placement created successfully'}
+        return Response(msg, status=status.HTTP_201_CREATED)
     else:
         return Response(placement_item.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -73,7 +71,8 @@ def PlacementUpdate(request, pk):
     
     if placement_data.is_valid():
         placement_data.save()
-        return Response(placement_data.data)
+        msg = {'message': 'Placement updated successfully'}
+        return Response(msg, status=status.HTTP_201_CREATED)
     
     return Response(placement_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -101,12 +100,10 @@ def CoursesList(request):
 def CoursesCreate(request):
     courses_item = CoursesSerializer(data=request.data)
     
-    if item.objects.filter(**request.data).exists():
-        return Response({'message': 'Courses already exists'}, status=status.HTTP_400_BAD_REQUEST)
-    
     if courses_item.is_valid():
         courses_item.save()
-        return Response(courses_item.data, status=status.HTTP_201_CREATED)
+        msg = {'message': 'Courses created successfully'}
+        return Response(msg, status=status.HTTP_201_CREATED)
     else:
         return Response(courses_item.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -132,7 +129,8 @@ def CoursesUpdate(request, pk):
     
     if courses_data.is_valid():
         courses_data.save()
-        return Response(courses_data.data)
+        msg = {'message': 'Courses updated successfully'}
+        return Response(msg, status=status.HTTP_201_CREATED)
     
     return Response(courses_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -147,8 +145,3 @@ def CoursesDelete(request, pk):
     
     courses_item.delete()
     return Response({'message': 'Courses deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-    
