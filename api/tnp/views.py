@@ -1,172 +1,154 @@
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
-from api.tnp.serializers import PlacementCreateSerializer, PlacementListSerializer, PlacementDetailSerializer, PlacementUpdateSerializer, CoursesCreateSerializer, CoursesListSerializer, CoursesDetailSerializer, CoursesUpdateSerializer
-from api.tnp.models import Placement, Courses
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter, OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.authentication import TokenAuthentication
-from api.account.permissions import IsOwnerOrReadOnly
+from rest_framework import status, serializers
+from .models import Placement, Courses, Batch
+from .serializers import PlacementSerializer, CoursesSerializer, BatchSerializer
 
 
-# Create your views here.
-class PlacementViewSet(viewsets.ModelViewSet):
-    queryset = Placement.objects.all()
-    serializer_class = PlacementCreateSerializer
-    # authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary',  'created_at', 'updated_at', 'is_approved']
-    search_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary', 'created_at', 'updated_at', 'is_approved']
-    ordering_fields = ['user', 'name', 'company_name', 'company_email', 'company_website', 'company_salary', 'created_at', 'updated_at', 'is_approved']
-
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return PlacementListSerializer
-        elif self.action == 'create':
-            return PlacementCreateSerializer
-        elif self.action == 'update':
-            return PlacementUpdateSerializer
-        return PlacementDetailSerializer
-
-    def get_queryset(self):
-        return Placement.objects.all().order_by('-created_at')
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return [IsAuthenticated()]
-        elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-            return [IsOwnerOrReadOnly()]
-        return []
-
-    @action(detail=False, methods=['GET'])
-    def get_my_placements(self, request):
-        user = request.user
-        placements = Placement.objects.filter(user=user)
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_approved_placements(self, request):
-        placements = Placement.objects.filter(is_approved=True)
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_unapproved_placements(self, request):
-        placements = Placement.objects.filter(is_approved=False)
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_latest_placements(self, request):
-        placements = Placement.objects.all().order_by('-created_at')[:5]
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_approved_latest_placements(self, request):
-        placements = Placement.objects.filter(is_approved=True).order_by('-created_at')[:5]
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_unapproved_latest_placements(self, request):
-        placements = Placement.objects.filter(is_approved=False).order_by('-created_at')[:5]
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['GET'])
+def PlacementAPIOverview(request):
+    api_urls = {
+        'List': '/placement-list/',
+        'Detail View': '/placement-detail/<str:pk>/',
+        'Create': '/placement-create/',
+        'Update': '/placement-update/<str:pk>/',
+        'Delete': '/placement-delete/<str:pk>/',
+    }
+    
+    return Response(api_urls)
 
 
-# Class for listing authenticated users Placement details
-class PlacementListAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        placements = Placement.objects.filter(user=request.user)
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-# Class for listing all the Placement without user approval
-class PlacementListAllAPIView(APIView):
-    def get(self, request, format=None):
-        placements = Placement.objects.filter(is_approved=True)
-        serializer = PlacementListSerializer(placements, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['GET'])
+def CoursesAPIOverview(request):
+    api_urls = {
+        'List': '/courses-list/',
+        'Detail View': '/courses-detail/<str:pk>/',
+        'Create': '/courses-create/',
+        'Update': '/courses-update/<str:pk>/',
+        'Delete': '/courses-delete/<str:pk>/',
+    }
+    
+    return Response(api_urls)
 
 
-class CoursesViewSet(viewsets.ModelViewSet):
-    queryset = Courses.objects.all()
-    serializer_class = CoursesCreateSerializer
-    # authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
-    search_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
-    ordering_fields = ['user', 'course_name', 'course_description', 'course_duration', 'course_fee', 'created_at', 'updated_at', 'is_approved']
+@api_view(['GET'])
+def PlacementList(request):
+    placements = Placement.objects.all()
+    placement_serializer = PlacementSerializer(placements, many=True)
+    return Response(placement_serializer.data)
 
-    def get_serializer_class(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            return CoursesListSerializer
-        elif self.action == 'create':
-            return CoursesCreateSerializer
-        elif self.action == 'update':
-            return CoursesUpdateSerializer
-        return CoursesDetailSerializer
 
-    def get_queryset(self):
-        return Courses.objects.all().order_by('-created_at')
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return [IsAuthenticated()]
-        elif self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
-            return [IsOwnerOrReadOnly()]
-        return []
-
-    @action(detail=False, methods=['GET'])
-    def get_my_courses(self, request):
-        user = request.user
-        courses = Courses.objects.filter(user=user)
-        serializer = CoursesListSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_approved_courses(self, request):
-        courses = Courses.objects.filter(is_approved=True)
-        serializer = CoursesListSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=False, methods=['GET'])
-    def get_unapproved_courses(self, request):
-        courses = Courses.objects.filter(is_approved=False)
-        serializer = CoursesListSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['POST'])
+def PlacementCreate(request):
+    placement_item = PlacementSerializer(data=request.data)
+    
+    if item.objects.filter(**request.data).exists():
+        return Response({'message': 'Placement already exists'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if placement_item.is_valid():
+        placement_item.save()
+        return Response(placement_item.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(placement_item.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-class CoursesListAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        courses = Courses.objects.filter(user=request.user)
-        serializer = CoursesListSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['GET'])
+def PlacementDetail(request, pk):
+    try:
+        placement_item = Placement.objects.get(pk=pk)
+    except Placement.DoesNotExist:
+        return Response({'message': 'Placement does not exist'}, status=status.HTTP_404_NOT_FOUND)
     
+    placement_serializer = PlacementSerializer(placement_item)
+    return Response(placement_serializer.data)
 
-class CoursesListAllAPIView(APIView):
-    def get(self, request, format=None):
-        courses = Courses.objects.filter(is_approved=True)
-        serializer = CoursesListSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def PlacementUpdate(request, pk):
+    try:
+        placement_item = Placement.objects.get(pk=pk)
+        placement_data = PlacementSerializer(placement_item, data=request.data)
+    except Placement.DoesNotExist:
+        return Response({'message': 'Placement does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    if placement_data.is_valid():
+        placement_data.save()
+        return Response(placement_data.data)
+    
+    return Response(placement_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def PlacementDelete(request, pk):
+    try:
+        placement_item = Placement.objects.get(pk=pk)
+        placement_data = PlacementSerializer(placement_item, data=request.data)
+    except Placement.DoesNotExist:
+        return Response({'message': 'Placement does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    placement_item.delete()
+    return Response({'message': 'Placement deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def CoursesList(request):
+    courses = Courses.objects.all()
+    courses_serializer = CoursesSerializer(courses, many=True)
+    return Response(courses_serializer.data)
+
+
+@api_view(['POST'])
+def CoursesCreate(request):
+    courses_item = CoursesSerializer(data=request.data)
+    
+    if item.objects.filter(**request.data).exists():
+        return Response({'message': 'Courses already exists'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if courses_item.is_valid():
+        courses_item.save()
+        return Response(courses_item.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(courses_item.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(['GET'])
+def CoursesDetail(request, pk):
+    try:
+        courses_item = Courses.objects.get(pk=pk)
+    except Courses.DoesNotExist:
+        return Response({'message': 'Courses does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    courses_serializer = CoursesSerializer(courses_item)
+    return Response(courses_serializer.data)
+
+
+@api_view(['POST'])
+def CoursesUpdate(request, pk):
+    try:
+        courses_item = Courses.objects.get(pk=pk)
+        courses_data = CoursesSerializer(courses_item, data=request.data)
+    except Courses.DoesNotExist:
+        return Response({'message': 'Courses does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    if courses_data.is_valid():
+        courses_data.save()
+        return Response(courses_data.data)
+    
+    return Response(courses_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def CoursesDelete(request, pk):
+    try:
+        courses_item = Courses.objects.get(pk=pk)
+        courses_data = CoursesSerializer(courses_item, data=request.data)
+    except Courses.DoesNotExist:
+        return Response({'message': 'Courses does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    courses_item.delete()
+    return Response({'message': 'Courses deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+
     

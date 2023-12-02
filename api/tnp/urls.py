@@ -1,14 +1,19 @@
-from django.urls import path, include
-from api.tnp.views import PlacementViewSet, PlacementListAPIView, PlacementListAllAPIView, CoursesViewSet, CoursesListAPIView, CoursesListAllAPIView
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+from . import views
 
 
 urlpatterns = [
-    path('placement/create/', PlacementViewSet.as_view({'post': 'create'}), name='create'),
-    path('placement/list/', PlacementListAPIView.as_view(), name='list'),
-    path('placement/list_all/', PlacementListAllAPIView.as_view(), name='list_all'),
-    # Courses urls
-    path('courses/create/', CoursesViewSet.as_view({'post': 'create'}), name='create'),
-    path('courses/list/', CoursesListAPIView.as_view(), name='list'),
-    path('courses/list_all/', CoursesListAllAPIView.as_view(), name='list_all'),
+    path('placement/', views.PlacementAPIOverview, name='placement-api-overview'),
+    path('placement-list/', views.PlacementList, name='placement-list'),
+    path('placement-create/', views.PlacementCreate, name='placement-create'),
+    path('placement-detail/<str:pk>/', views.PlacementDetail, name='placement-detail'),
+    path('placement-update/<str:pk>/', views.PlacementUpdate, name='placement-update'),
+    path('placement-delete/<str:pk>/', views.PlacementDelete, name='placement-delete'),
+    
+    path('courses/', views.CoursesAPIOverview, name='courses-api-overview'),
+    path('courses-list/', views.CoursesList, name='courses-list'),
+    path('courses-create/', views.CoursesCreate, name='courses-create'),
+    path('courses-detail/<str:pk>/', views.CoursesDetail, name='courses-detail'),
+    path('courses-update/<str:pk>/', views.CoursesUpdate, name='courses-update'),
+    path('courses-delete/<str:pk>/', views.CoursesDelete, name='courses-delete'),    
 ]

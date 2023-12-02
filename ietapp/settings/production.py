@@ -33,3 +33,16 @@ sentry_sdk.init(
     release="ietapp@%s" % ietapp.__version__,
     integrations=[DjangoIntegration()],
 )
+
+
+# ==============================================================================
+# DATABASES SETTINGS
+# ==============================================================================
+
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+
+#     #'default': dj_database_url.parse("DATABASE_URL", conn_max_age=600),
+# }
+
+#postgres://placement_user:UJVM2nwSRTyHn6fNCM8BtxlJdh2nf741@dpg-cjbloc3bq8nc73dndb00-a.singapore-postgres.render.com/placement
