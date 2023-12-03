@@ -1,4 +1,5 @@
-Django==4.1.5
+djongo==1.3.6
+Django==4.1.13
 python-decouple==3.8   #for setting related security, protect sensitive data
 pytz==2023.3   # for timezone aware datetime fields
 dj-database-url==2.0.0   #for database url
@@ -18,4 +19,4 @@ mongoengine==0.27.0
 django-filter==23.2
 whitenoise==6.2.0
 Brotli==1.0.9
-djongo==1.3.6
+
