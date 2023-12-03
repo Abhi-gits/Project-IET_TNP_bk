@@ -5,6 +5,8 @@ from decouple import Csv, config
 from datetime import timedelta
 import mongoengine
 import os
+from dotenv import load_dotenv
+load_dotenv()  # loads the configs from .env
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
