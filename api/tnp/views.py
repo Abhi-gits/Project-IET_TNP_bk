@@ -28,7 +28,7 @@ def PlacementList(request):
 
 @api_view(['GET'])
 def PlacementListApproved(request):
-    placements = Placement.objects.filter(is_approved=True)
+    placements = Placement.objects.filter(status='approved')
     placement_serializer = PlacementSerializer(placements, many=True)
     return Response(placement_serializer.data)
 \
@@ -109,7 +109,7 @@ def CoursesList(request):
 
 @api_view(['GET'])
 def CoursesListApproved(request):
-    courses = Courses.objects.filter(is_approved=True)
+    courses = Courses.objects.filter(status='approved')
     courses_serializer = CoursesSerializer(courses, many=True)
     return Response(courses_serializer.data)
 
