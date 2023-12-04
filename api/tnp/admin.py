@@ -12,18 +12,18 @@ class BatchAdmin(admin.ModelAdmin):
     
 admin.site.register(Batch, BatchAdmin)
 class PlacementAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'student_name', 'student_branch', 'student_roll_no', 'student_batch', 'company_name', 'student_salary', 'position_offered', 'company_offer_letter', 'remarks', 'is_approved']
-    list_filter = ['user', 'student_name', 'company_name',  'student_salary', 'is_approved']
-    search_fields = ['user', 'student_name', 'company_name', 'student_salary', 'is_approved']
+    list_display = ['id', 'user', 'student_name', 'student_branch', 'student_roll_no', 'student_batch', 'company_name', 'student_salary', 'position_offered', 'company_offer_letter', 'remarks', 'status']
+    list_filter = ['user', 'student_name', 'company_name',  'student_salary', 'status']
+    search_fields = ['user', 'student_name', 'company_name', 'student_salary', 'status']
     list_per_page = 20
 
 admin.site.register(Placement, PlacementAdmin)
 
 
 class CoursesAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'student_name', 'course_name', 'is_approved']
-    list_filter = ['user', 'student_name', 'course_name', 'is_approved']
-    search_fields = ['user', 'student_name', 'course_name', 'is_approved']
+    list_display = ['id', 'user', 'student_name', 'course_name', 'status']
+    list_filter = ['user', 'student_name', 'course_name', 'status']
+    search_fields = ['user', 'student_name', 'course_name', 'status']
     list_per_page = 20
 
 admin.site.register(Courses, CoursesAdmin)

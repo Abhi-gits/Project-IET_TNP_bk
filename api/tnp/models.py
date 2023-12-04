@@ -14,6 +14,15 @@ branch_choices = (
     ('EE', 'Electrical Engineering'),
 )
 
+
+status_choices = (
+    ('approved', 'Approved'),
+    ('not_approved', 'Not Approved'),
+    ('pending', 'Pending'),
+    ('rejected', 'Rejected')
+)
+
+
 class Batch(models.Model):
     starting_year = models.IntegerField()
     ending_year = models.IntegerField()
@@ -47,7 +56,7 @@ class Placement(models.Model):
     remarks = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_approved = models.BooleanField(default=False)
+    status = models.CharField(max_length=255, choices=status_choices, default='pending')
     
     class Meta:
         ordering = ['-created_at']
@@ -71,7 +80,8 @@ class Courses(models.Model):
     course_fee = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_approved = models.BooleanField(default=False)
+    status = models.CharField(max_length=255, choices=status_choices, default='pending')
+    
     
     
     class Meta:

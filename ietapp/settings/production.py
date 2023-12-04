@@ -42,12 +42,12 @@ sentry_sdk.init(
 
 DATABASES = {
         'default': {
-            'ENGINE': os.getenv('MONGO_ENGINE'),
-            'NAME': os.getenv('MONGO_DATABASE'),
+            'ENGINE': config('MONGO_ENGINE'), 
+            'NAME': config('MONGO_DATABASE'),
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
                 
-                'host': os.getenv('MONGO_HOST')
+                'host': config('MONGO_HOST'),
             }  
         }
 }
