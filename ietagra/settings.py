@@ -236,8 +236,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Azure settings
 # ==============================================================================
 
-DEFAULT_FILE_STORAGE = "core.azure_storage.AzureMediaStorage"
-STATICFILES_STORAGE = "core.azure_storage.AzureStaticStorage"
+DEFAULT_FILE_STORAGE = "ietagra.azure_storage.AzureMediaStorage"
+STATICFILES_STORAGE = "ietagra.azure_storage.AzureStaticStorage"
 
 AZURE_ACCOUNT_NAME = os.getenv("AZURE_ACCOUNT_NAME")
 AZURE_ACCOUNT_KEY = os.getenv("AZURE_ACCOUNT_KEY")
