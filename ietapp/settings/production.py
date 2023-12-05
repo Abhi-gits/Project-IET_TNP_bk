@@ -3,7 +3,6 @@
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-import mongoengine
 from .base import *
 
 # ==============================================================================
@@ -27,12 +26,12 @@ SESSION_COOKIE_SECURE = True
 # THIRD-PARTY APPS SETTINGS
 # ==============================================================================
 
-sentry_sdk.init(
-    dsn=config("SENTRY_DSN", default=""),
-    environment=SIMPLE_ENVIRONMENT,
-    release="ietapp@%s" % ietapp.__version__,
-    integrations=[DjangoIntegration()],
-)
+# sentry_sdk.init(
+#     dsn=config("SENTRY_DSN", default=""),
+#     environment=SIMPLE_ENVIRONMENT,
+#     release="ietapp@%s" % ietapp.__version__,
+#     integrations=[DjangoIntegration()],
+# )
 
 
 # ==============================================================================
