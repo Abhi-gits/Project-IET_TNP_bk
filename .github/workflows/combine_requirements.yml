@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Debug
+      run: |
+        echo "GitHub Token: ${{ secrets.GH_PAT }}"
+      
     - name: Checkout code
       uses: actions/checkout@v2
 
