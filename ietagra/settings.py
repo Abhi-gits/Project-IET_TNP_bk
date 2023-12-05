@@ -68,11 +68,11 @@ MIDDLEWARE = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ROOT_URLCONF = "ietapp.urls"
+ROOT_URLCONF = "ietagra.urls"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-WSGI_APPLICATION = "ietapp.wsgi.application"
+WSGI_APPLICATION = "ietagra.wsgi.application"
 
 AUTH_USER_MODEL = "account.User"
 
