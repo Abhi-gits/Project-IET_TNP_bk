@@ -40,14 +40,47 @@ sentry_sdk.init(
 # ==============================================================================
 
 
-DATABASES = {
-        'default': {
-            'ENGINE': config('MONGO_ENGINE'), 
-            'NAME': config('MONGO_DATABASE'),
-            'ENFORCE_SCHEMA': False,
-            'CLIENT': {
+# DATABASES = {
+#         'default': {
+#             'ENGINE': config('MONGO_ENGINE'), 
+#             'NAME': config('MONGO_DATABASE'),
+#             'ENFORCE_SCHEMA': False,
+#             'CLIENT': {
                 
-                'host': config('MONGO_HOST'),
-            }  
-        }
+#                 'host': config('MONGO_HOST'),
+#             }  
+#         }
+# }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DBNAME'),
+        'HOST': os.environ.get('DBHOST'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('DBPASS'),
+        'OPTIONS': {'sslmode': 'require'},
+    }
 }
+
+
+# ==============================================================================
+# Azure settings
+# ==============================================================================
+
+DEFAULT_FILE_STORAGE = 'core.azure_storage.AzureMediaStorage'
+STATICFILES_STORAGE = 'core.azure_storage.AzureStaticStorage'
+
+AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
+AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+
+# ==============================================================================

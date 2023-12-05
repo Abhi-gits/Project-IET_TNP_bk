@@ -3,12 +3,13 @@ from pathlib import Path
 import dj_database_url
 from decouple import Csv, config
 from datetime import timedelta
-import mongoengine
+from dotenv import load_dotenv
 import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # ==============================================================================
 # CORE SETTINGS
