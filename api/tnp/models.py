@@ -1,48 +1,52 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import datetime
+
 # Create your models here.
 from api.account.models import User
 
 # Create your models here.
 
 branch_choices = (
-    ('CSE', 'Computer Science & Engineering'),
-    ('ECE', 'Electronics & Communication Engineering'),
-    ('ME', 'Mechanical Engineering'),
-    ('CE', 'Civil Engineering'),
-    ('EE', 'Electrical Engineering'),
+    ("CSE", "Computer Science & Engineering"),
+    ("ECE", "Electronics & Communication Engineering"),
+    ("ME", "Mechanical Engineering"),
+    ("CE", "Civil Engineering"),
+    ("EE", "Electrical Engineering"),
 )
 
 
 status_choices = (
-    ('approved', 'Approved'),
-    ('not_approved', 'Not Approved'),
-    ('pending', 'Pending'),
-    ('rejected', 'Rejected')
+    ("approved", "Approved"),
+    ("not_approved", "Not Approved"),
+    ("pending", "Pending"),
+    ("rejected", "Rejected"),
 )
 
 
 class Batch(models.Model):
     starting_year = models.IntegerField()
     ending_year = models.IntegerField()
-    
+
     class Meta:
-        ordering = ['-starting_year']
-        
+        ordering = ["-starting_year"]
+
     def __str__(self):
-        return str(self.starting_year) + ' - ' + str(self.ending_year)
-    
+        return str(self.starting_year) + " - " + str(self.ending_year)
+
     def clean(self):
         if self.starting_year < 1996:
-            raise ValidationError('Starting year must be greater than 1996')
+            raise ValidationError("Starting year must be greater than 1996")
         if self.ending_year > datetime.now().year + 4:
-            raise ValidationError(f'Ending year must be smaller than {datetime.now().year + 4}')
+            raise ValidationError(
+                f"Ending year must be smaller than {datetime.now().year + 4}"
+            )
         if self.starting_year > self.ending_year:
-            raise ValidationError('Starting year must be less than ending year')
+            raise ValidationError("Starting year must be less than ending year")
         if (self.ending_year - self.starting_year) == 3:
-            raise ValidationError('Batch duration must be 4 years')
-    
+            raise ValidationError("Batch duration must be 4 years")
+
+
 class Placement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     student_name = models.CharField(max_length=255)
@@ -56,15 +60,14 @@ class Placement(models.Model):
     remarks = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=255, choices=status_choices, default='pending')
-    
+    status = models.CharField(max_length=255, choices=status_choices, default="pending")
+
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     # return company name + name of user
     def __str__(self):
-        return self.company_name + ' - ' + self.user.name
-    
+        return self.company_name + " - " + self.user.name
 
 
 class Courses(models.Model):
@@ -80,14 +83,11 @@ class Courses(models.Model):
     course_fee = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=255, choices=status_choices, default='pending')
-    
-    
-    
+    status = models.CharField(max_length=255, choices=status_choices, default="pending")
+
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     # return course name + name of user
     def __str__(self):
-        return self.course_name + ' - ' + self.user.name
-    
+        return self.course_name + " - " + self.user.name

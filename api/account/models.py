@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 #  Custom User Manager
 class UserManager(BaseUserManager):
@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
         Creates and saves a User with the given email, name, tc and password.
         """
         if not email:
-            raise ValueError('User must have an email address')
+            raise ValueError("User must have an email address")
 
         user = self.model(
             email=self.normalize_email(email),
@@ -34,17 +34,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 #  Custom User Model
 class User(AbstractBaseUser):
     USER_TYPE_CHOICES = (
-        (1, 'Admin'),
-        (2, 'Student'),
-        (3, 'Teacher'),
-        (4, 'Staff'),
+        (1, "Admin"),
+        (2, "Student"),
+        (3, "Teacher"),
+        (4, "Staff"),
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
     email = models.EmailField(
-        verbose_name='Email',
+        verbose_name="Email",
         max_length=255,
         unique=True,
     )
@@ -57,8 +58,8 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'phone']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name", "phone"]
 
     def __str__(self):
         return self.email
