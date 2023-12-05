@@ -21,6 +21,14 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 
 # ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost,ietagra.azurewebsites.net", cast=Csv())
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+
+
+SECURE_SSL_REDIRECT = \
+    os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+if SECURE_SSL_REDIRECT:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
