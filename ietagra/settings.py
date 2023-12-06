@@ -172,7 +172,7 @@ EMAIL_USE_TLS = True
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
-            'NAME': 'ietagra',
+            'NAME': 'IETAGRATNP',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
                 'host': os.environ.get("DBMONGO"),
