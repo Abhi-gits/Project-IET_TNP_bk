@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "api.basic",
     "api.account",
     "api.tnp",
+    "api.placement",
     # Third party apps
     "corsheaders",
     "rest_framework",
