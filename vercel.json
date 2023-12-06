@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "ietagra/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "ietagra/wsgi.py"
+      }
+    ]
+  }
