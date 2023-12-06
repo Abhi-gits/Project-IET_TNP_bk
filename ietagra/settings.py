@@ -157,15 +157,27 @@ EMAIL_USE_TLS = True
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": os.environ.get("DBNAME"),
+#         "HOST": os.environ.get("DBHOST"),
+#         "USER": os.environ.get("DBUSER"),
+#         "PASSWORD": os.environ.get("DBPASS"),
+#         'PORT': os.environ.get("DBPORT"),
+#         "OPTIONS": {"sslmode": "require"},
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DBNAME"),
-        "HOST": os.environ.get("DBHOST"),
-        "USER": os.environ.get("DBUSER"),
-        "PASSWORD": os.environ.get("DBPASS"),
-        "OPTIONS": {"sslmode": "require"},
-    }
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'your-db-name',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host': os.environ.get("DBMONGO"),
+            }  
+        }
 }
 
 
