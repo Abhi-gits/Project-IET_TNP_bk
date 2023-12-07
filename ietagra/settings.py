@@ -36,12 +36,14 @@ INSTALLED_APPS = [
     # our all apps
     "api.basic",
     "api.account",
-    "api.tnp",
+    # "api.tnp",
     "api.placement",
+    "api.batch",
     # Third party apps
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    'drf_spectacular',
 ]
 
 # ==============================================================================
@@ -106,8 +108,8 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
-
 
 PASSWORD_RESET_TIMEOUT = 1200  # 1200 Sec = 20 Min
 
@@ -269,3 +271,22 @@ STATICFILES_DIRS = [
 ]
 MEDIA_ROOT = BASE_DIR / "media"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+
+# ==============================================================================
+# API Documentation settings
+# ==============================================================================
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'IETAGRA API',
+    'DESCRIPTION': 'API for IETAGRA',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+    },
+    # OTHER SETTINGS
+}
+
+# ==============================================================================
