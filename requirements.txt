@@ -21,4 +21,4 @@ gunicorn==20.1.0
 pymongo==3.12.3
 djongo==1.3.6
 pyairtable==2.2.1
-srf-spectacular==0.26.5
+drf-spectacular==0.26.5
