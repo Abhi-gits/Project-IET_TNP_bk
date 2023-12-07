@@ -6,4 +6,5 @@ urlpatterns = [
     # path("tnp/", include("api.tnp.urls")),
     path("placement/", include("api.placement.urls")),
     path("batch/", include("api.batch.urls")),
+    path("course/", include("api.course.urls")),
 ]
