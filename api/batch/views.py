@@ -85,13 +85,6 @@ class BatchCreate(APIView):
                 description="Batch name",
                 required=True,
                 type=OpenApiTypes.STR,
-                examples=[
-                    OpenApiExample(
-                        "2020-2024",
-                        summary="Difference should be 4 years",
-                        value="2020-2024"
-                    ),
-                ]
             ),
         ],
         request=OpenApiTypes.OBJECT,
@@ -99,6 +92,17 @@ class BatchCreate(APIView):
             status.HTTP_201_CREATED: OpenApiTypes.OBJECT,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.OBJECT,
         },
+        examples=[
+            OpenApiExample(
+                name="Batch Adding",
+                summary="Add a batch",
+                value={
+                    "batch": "2020-2024",
+                },
+                response_only=True,
+                status_codes=["201", "400"],
+            ),
+        ]
     )
 
     def post(self, request, *args, **kwargs):
@@ -158,6 +162,17 @@ class BatchUpdate(APIView):
             status.HTTP_200_OK: OpenApiTypes.OBJECT,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.OBJECT,
         },
+        examples=[
+            OpenApiExample(
+                name="Batch Updating",
+                summary="Update a batch",
+                value={
+                    "batch": "2020-2024",
+                },
+                response_only=True,
+                status_codes=["200", "400"],
+            ),
+        ]
     )
 
     def patch(self, request, record_id, *args, **kwargs):
