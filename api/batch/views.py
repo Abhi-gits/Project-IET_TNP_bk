@@ -8,6 +8,7 @@ from drf_spectacular.types import OpenApiTypes
 
 import requests
 import json
+from django.conf import settings
 
 import os
 from pyairtable import Api
@@ -18,7 +19,7 @@ api = Api(os.environ.get('AIRTABLE_API_KEY'))
 table = api.table(os.environ.get('IETAGRA_AIRTABLE_BASE_ID'), os.environ.get('BATCH_AIRTABLE_TABLE'))
 
 # Airtable API endpoint
-BASE_URL = f"https://api.airtable.com/v0/{os.environ.get('IETAGRA_AIRTABLE_BASE_ID')}/{os.environ.get('PLACEMENT_AIRTABLE_TABLE')}"
+BASE_URL = f"https://api.airtable.com/v0/{os.environ.get('IETAGRA_AIRTABLE_BASE_ID')}/{os.environ.get('BATCH_AIRTABLE_TABLE')}"
 # Create your views here.
 
 @api_view(["GET"])
@@ -109,6 +110,9 @@ class BatchCreate(APIView):
             "Content-Type": "application/json"
         }
         
+        if not request.data:
+            return Response({"error": "Please provide the data to create a record"}, status=status.HTTP_400_BAD_REQUEST)
+        
         # Data to be sent to Airtable
         data = {
             "records": [
@@ -124,8 +128,8 @@ class BatchCreate(APIView):
         response = requests.post(base_url, headers=headers, json=data)
         
         # Check if request was successful
-        if response.status.code == status.HTTP_200_OK:
-            return Response({"message": "Batch created successfully"}, status=status.HTTP_200_OK)
+        if response.status_code == status.HTTP_200_OK:
+            return Response({"message": "Batch created successfully"}, status=status.HTTP_201_CREATED)
         else:
             # if unsuccessful, return error message
             error_message = json.loads(response.text).get('error', {}).get('message', 'Unknown error')
@@ -165,6 +169,10 @@ class BatchUpdate(APIView):
             "Content-Type": "application/json"
         }
         
+        # Check if data is provided
+        if not request.data:
+            return Response({"error": "Please provide the data to update the record"}, status=status.HTTP_400_BAD_REQUEST)
+        
         # Data to be sent to Airtable
         data = {
             "records": [
@@ -176,6 +184,7 @@ class BatchUpdate(APIView):
                 }
             ]
         }
+        
         
         # Send PATCH request to Airtable
         response = requests.patch(base_url, headers=headers, json=data)
