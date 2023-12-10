@@ -291,9 +291,7 @@ class PlacementUpdate(APIView):
         
         # Data to be sent to Airtable API
         data = {
-            "records": [
-                {
-                    "id": record_id,
+            
                     "fields": {
                         "roll_number": request.data.get("roll_number"),
                         "student_name": request.data.get("student_name"),
@@ -306,8 +304,7 @@ class PlacementUpdate(APIView):
                         "remarks": request.data.get("remarks"),
                         "status": request.data.get("status"),
                     }
-                },
-            ]
+               
         }
         
         # Send PATCH request to Airtable API
