@@ -34,26 +34,16 @@ def BatchListAll(request):
 
 class BatchDetail(APIView):
     @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name="batch",
-                description="Batch name",
-                required=True,
-                type=OpenApiTypes.STR,
-                examples=[
-                    OpenApiExample(
-                        "2020-2024",
-                        summary="Difference should be 4 years",
-                        value="2020-2024"
-                    ),
-                ]
+        examples=[
+            OpenApiExample(
+                name="Batch Detail",
+                summary="Get details of a batch",
+                value={
+                    "batch": "2020-2024",
+                },
+                response_only=True,
             ),
-        ],
-        request=OpenApiTypes.OBJECT,
-        responses={
-            status.HTTP_200_OK: OpenApiTypes.OBJECT,
-            status.HTTP_404_NOT_FOUND: OpenApiTypes.OBJECT,
-        },
+        ]
     )
 
     def get(self, request, record_id, *args, **kwargs):
@@ -88,10 +78,6 @@ class BatchCreate(APIView):
             ),
         ],
         request=OpenApiTypes.OBJECT,
-        responses={
-            status.HTTP_201_CREATED: OpenApiTypes.OBJECT,
-            status.HTTP_400_BAD_REQUEST: OpenApiTypes.OBJECT,
-        },
         examples=[
             OpenApiExample(
                 name="Batch Adding",
@@ -99,8 +85,6 @@ class BatchCreate(APIView):
                 value={
                     "batch": "2020-2024",
                 },
-                response_only=True,
-                status_codes=["201", "400"],
             ),
         ]
     )
@@ -142,26 +126,6 @@ class BatchCreate(APIView):
         
 class BatchUpdate(APIView):
     @extend_schema(
-        parameters=[
-            OpenApiParameter(
-                name="batch",
-                description="Batch name",
-                required=True,
-                type=OpenApiTypes.STR,
-                examples=[
-                    OpenApiExample(
-                        "2020-2024",
-                        summary="Difference should be 4 years",
-                        value="2020-2024"
-                    ),
-                ]
-            ),
-        ],
-        request=OpenApiTypes.OBJECT,
-        responses={
-            status.HTTP_200_OK: OpenApiTypes.OBJECT,
-            status.HTTP_400_BAD_REQUEST: OpenApiTypes.OBJECT,
-        },
         examples=[
             OpenApiExample(
                 name="Batch Updating",
@@ -170,7 +134,6 @@ class BatchUpdate(APIView):
                     "batch": "2020-2024",
                 },
                 response_only=True,
-                status_codes=["200", "400"],
             ),
         ]
     )
@@ -222,20 +185,9 @@ class BatchDelete(APIView):
                 description="Batch name",
                 required=True,
                 type=OpenApiTypes.STR,
-                examples=[
-                    OpenApiExample(
-                        "2020-2024",
-                        summary="Difference should be 4 years",
-                        value="2020-2024"
-                    ),
-                ]
             ),
         ],
         request=OpenApiTypes.OBJECT,
-        responses={
-            status.HTTP_200_OK: OpenApiTypes.OBJECT,
-            status.HTTP_400_BAD_REQUEST: OpenApiTypes.OBJECT,
-        },
     )
 
     def delete(self, request, record_id, *args, **kwargs):
