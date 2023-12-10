@@ -308,7 +308,7 @@ class PlacementUpdate(APIView):
                 "roll_number": request.data.get("roll_number"),
                 "student_name": request.data.get("student_name"),
                 "student_branch": request.data.get("student_branch"),
-                "student_batch": request.data.get("student_batch"),
+                "student_batch": [].append(request.data.get("student_batch")),
                 "company_name": request.data.get("company_name"),
                 "student_salary": request.data.get("student_salary"),
                 "position_offered": request.data.get("position_offered"),
