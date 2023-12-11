@@ -37,6 +37,7 @@ def PlacementListAll(request):
         "offer_letter",
         "remarks",
         "status",
+        "profile_picture",
     ]
     records = table.all(fields=fields)
     return Response(records)
@@ -56,6 +57,8 @@ def PlacementListApproved(request):
         "offer_letter",
         "remarks",
         "status",
+        "profile_picture",
+        
     ]
     records = table.all(formula=formula, fields=fields)
     return Response(records)
