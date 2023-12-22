@@ -36,10 +36,10 @@ INSTALLED_APPS = [
     # our all apps
     "api.basic",
     "api.account",
-    # "api.tnp",
     "api.placement",
     "api.batch",
     "api.course",
+    "api.gate",
     # Third party apps
     "corsheaders",
     "rest_framework",
