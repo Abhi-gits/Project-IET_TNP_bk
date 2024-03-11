@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "api.batch",
     "api.course",
     "api.gate",
+    "api.projects",
     # Third party apps
     "corsheaders",
     "rest_framework",
