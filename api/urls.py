@@ -8,4 +8,5 @@ urlpatterns = [
     path("batch/", include("api.batch.urls")),
     path("course/", include("api.course.urls")),
     path("gate/", include("api.gate.urls")),
+    path("projects/", include("api.projects.urls")),
 ]
